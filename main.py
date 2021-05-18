@@ -1,17 +1,37 @@
-# coding=utf-8
-# This is a sample Python script.
+import telegramConstants as keys
+from telegram.ext import *
+import telegramResponse as R
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def start_command(update, context):
+    update.message.reply_text('Jan ist Gay')
 
+def help_command(update, context):
+    update.message.reply_text('Gahn uf Google du Goo')
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print("Hi, {0}".format(name))  # Press ⌘F8 to toggle the breakpoint.
+def handle_message(update, context):
+    text = str(update.message.text).lower()
+    print(text);
+    response = R.simple_responses(text)
 
+    update.message.reply_text(response)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def error(update, context):
+    print(f"Update {update} caused error {context.error}")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+def main():
+    updater = Updater(keys.API_KEY, use_context=True)
+    dispatcher = updater.dispatcher
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler("start", start_command))
+    dp.add_handler(CommandHandler("help", help_command))
+
+    dp.add_handler(MessageHandler(Filters.text, handle_message))
+
+    dp.add_error_handler(error)
+
+    updater.start_polling()
+    updater.idle()
+
+print("Bot started...")
+main()
