@@ -3,14 +3,18 @@ from telegram.ext import *
 import telegramResponse as R
 
 def start_command(update, context):
-    update.message.reply_text('Jan ist Gay')
+    update.message.reply_text('Hey User, how can I help you?')
 
 def help_command(update, context):
-    update.message.reply_text('Gahn uf Google du Goo')
+    update.message.reply_text("" + 
+    "You can use this comands = " + 
+    "/showcoins")
+        
+    
 
 def handle_message(update, context):
     text = str(update.message.text).lower()
-    print(text);
+    print(text)
     response = R.simple_responses(text)
 
     update.message.reply_text(response)
